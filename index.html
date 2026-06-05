@@ -1941,64 +1941,80 @@
       nav ul { display: none; }
       .proj-grid { grid-template-columns: 1fr; transform: none; }
       .stats-row { flex-direction: column; }
-      .hero-name { font-size: 44px; letter-spacing: -2px; }
-      .contact-wrap { padding: 36px 24px; }
-      .contact-headline { font-size: 36px; }
-      .s-title { font-size: 28px; letter-spacing: -1.2px; }
       .cv-card { padding: 28px 24px; }
     }
 
     /* ── MOBILE CORE (≤768px) ───────────────────────── */
     @media (max-width: 768px) {
-      /* Let sections size to content — no forced full-height */
-      .page-section { min-height: auto !important; }
-      #hero { min-height: 100svh; min-height: 100vh; } /* keep welcome full screen */
+      /* Container: fix 48px → 16px — this is the #1 issue */
+      .container { padding: 0 16px; }
 
-      /* Hide desktop-only controls */
+      /* Sections: natural height, no forced 100vh */
+      .page-section { min-height: auto !important; }
+      #hero { min-height: 100svh; min-height: 100vh; }
+      #about { min-height: auto !important; }
+
+      /* Hide desktop-only chrome */
       .page-nav, .page-label, .scroll-bar { display: none !important; }
 
-      /* Hero card — compact padding */
-      .hero-card { padding: 28px 20px 24px; border-radius: 20px; }
-      .hero-card-inner { gap: 20px; }
+      /* Hero card: strip the desktop padding */
+      .hero-card { padding: 24px 16px 22px; border-radius: 18px; }
+      .hero-card-inner { gap: 16px; }
+
+      /* Hero text */
+      .hero-name { font-size: clamp(36px, 9vw, 52px); white-space: normal; letter-spacing: 1px; }
+      .hero-role { font-size: 14px; max-width: 100%; }
       .hero-chips { justify-content: center; }
       .hero-actions { justify-content: center; flex-wrap: wrap; }
-      .hero-edu { text-align: center; justify-content: center; }
+      .hero-edu { text-align: center; justify-content: center; flex-wrap: wrap; font-size: 11.5px; }
+
+      /* Section headers */
+      .s-title { font-size: clamp(26px, 7vw, 36px); letter-spacing: 0; margin-bottom: 28px; }
 
       /* About */
-      #about { min-height: auto !important; }
+      .abt-label { font-size: 16px; }
+      .abt-dim   { font-size: 13px; }
       .abt-body p { font-size: 14px; }
 
       /* Skills mac window */
       .mac-win { width: 100%; }
       .mac-folders-grid { gap: 6px; }
-      .mac-folder { padding: 8px 6px; }
+      .mac-folder { padding: 8px 5px; }
       .mac-folder-lbl { font-size: 9px; }
 
-      /* Experience left column narrower */
-      .exp-item { grid-template-columns: 110px 1fr; gap: 0 18px; }
+      /* Experience */
+      .exp-item { grid-template-columns: 90px 1fr; gap: 0 14px; }
 
-      /* Now cards full width */
+      /* Now cards */
       .now-card { flex: 1 1 100%; }
 
-      /* CV card padding */
+      /* CV */
       .cv-terminal-wrap { padding: 0; }
 
-      /* Contact wrap */
-      .contact-wrap { padding: 32px 20px; }
-      .contact-headline { font-size: 32px; }
+      /* Contact */
+      .contact-wrap { padding: 28px 16px; }
+      .contact-headline { font-size: 28px; }
+      .contact-sub { font-size: 13px; }
 
       /* Projects folder */
-      .pfl-body { padding: 60px 18px 60px; }
-      .pfl-title { font-size: clamp(22px, 5vw, 32px); }
+      .pfl-body { padding: 50px 16px 50px; }
+      .pfl-title { font-size: clamp(20px, 5vw, 28px); }
+
+      /* Certifications */
+      .cert-accordion { flex-direction: column; height: auto; gap: 10px; }
+      .ca-panel { flex: none; height: 64px; }
+      .ca-panel.open { height: auto; min-height: 260px; }
     }
 
-    /* Tiny screens ≤ 400px */
-    @media (max-width: 400px) {
-      .hero-name { font-size: 34px; letter-spacing: -2px; }
+    /* Tiny screens ≤ 420px */
+    @media (max-width: 420px) {
+      .container { padding: 0 14px; }
+      .hero-name { font-size: clamp(32px, 8.5vw, 42px); }
       .id-card-col { display: none; }
-      .hero-card { padding: 22px 16px; }
+      .hero-card { padding: 20px 14px; }
       .exp-item { grid-template-columns: 1fr; }
-      .exp-left { text-align: left; padding-bottom: 4px; }
+      .exp-left { text-align: left; padding-bottom: 4px; border-left: 1px solid rgba(255,255,255,.1); padding-left: 20px; }
+      .exp-right::before { display: none; }
     }
 
     /* ── HAMBURGER MENU ─────────────────────────────── */
@@ -2048,25 +2064,13 @@
     @media (max-width: 640px) {
       .nav-burger { display: flex; }
       .nav-hire, .lang-pill { display: none; }
-      .hero-intro-grid { gap: 16px; }
       .id-card { width: 200px; }
-      .page-section { padding-top: 70px; }
       #experience { padding: 80px 0 40px; }
       #certifications { padding: 80px 0 60px; }
       #now { padding: 80px 0 60px; }
-      .pfl-body { padding: 80px 22px 80px; }
     }
     @media (max-width: 480px) {
-      .hero-name { font-size: 36px; letter-spacing: -2px; }
-      .id-card-col { transform: scale(.88); transform-origin: top center; }
       .exp-yr-num { font-size: 56px; }
-    }
-    @media (max-width: 640px) {
-      .cert-accordion { flex-direction: column; height: auto; gap: 10px; }
-      .ca-panel { flex: none; height: 64px; }
-      .ca-panel.open { height: auto; min-height: 260px; }
-      .ca-collapsed { padding-top: 0; flex-direction: row; justify-content: flex-start;
-        gap: 12px; padding: 18px 20px; }
     }
 
     /* ── EXP TIMELINE INTRO ─────────────────────────── */
