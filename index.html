@@ -1949,10 +1949,9 @@
       /* Container: fix 48px → 16px — this is the #1 issue */
       .container { padding: 0 16px; }
 
-      /* Sections: natural height, no forced 100vh */
-      .page-section { min-height: auto !important; }
+      /* Sections: full-height snap, except content-heavy ones */
       #hero { min-height: 100svh; min-height: 100vh; }
-      #about { min-height: auto !important; }
+      #about, #experience, #certifications { min-height: auto !important; }
 
       /* Hide desktop-only chrome */
       .page-nav, .page-label, .scroll-bar { display: none !important; }
@@ -4175,13 +4174,17 @@ initCardTilt();
     }
   }, { passive: false });
 
-  /* touch swipe — desktop only; mobile scrolls freely */
+  /* touch swipe — navigate only when at section boundary */
   var ty = 0;
   window.addEventListener('touchstart', function(e){ ty = e.touches[0].clientY; }, { passive: true });
   window.addEventListener('touchend',   function(e){
-    if (window.innerWidth <= 768) return;
     var dy = ty - e.changedTouches[0].clientY;
-    if (Math.abs(dy) > 80) navigate(dy > 0 ? 1 : -1);
+    if (Math.abs(dy) < 80) return;
+    var go = dy > 0 ? 1 : -1;
+    var r  = sections[current].getBoundingClientRect();
+    var atEdge = (go > 0 && r.bottom <= window.innerHeight + 12) ||
+                 (go < 0 && r.top    >= -12);
+    if (atEdge) navigate(go);
   }, { passive: true });
 
   /* sync current on free scroll */
