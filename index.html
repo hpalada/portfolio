@@ -2000,6 +2000,10 @@
       .pfl-body { padding: 50px 16px 50px; }
       .pfl-title { font-size: clamp(20px, 5vw, 28px); }
 
+      /* Custom cursor: hide on touch devices */
+      .c-dot, .c-ring, .c-glow { display: none !important; }
+      body, a, button { cursor: auto; }
+
       /* Certifications: vertical stack, collapsed panel = horizontal row */
       .cert-accordion { flex-direction: column; height: auto; gap: 10px; }
       .ca-panel { flex: none; height: 64px; }
@@ -3507,7 +3511,8 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ── CURSOR ─────────────────────────────────────── */
+/* ── CURSOR (desktop only) ────────────────────── */
+if (window.innerWidth > 768) {
 const dot   = document.getElementById('cdot');
 const ring  = document.getElementById('cring');
 const glow  = document.getElementById('cglow');
@@ -3545,6 +3550,7 @@ document.querySelectorAll('a, button, .nav-hire, .btn-solid, .btn-ghost, .sbtn')
   el.addEventListener('mouseenter', () => { ring.classList.add('hov'); dot.classList.add('hov'); });
   el.addEventListener('mouseleave', () => { ring.classList.remove('hov'); dot.classList.remove('hov'); });
 });
+}
 function bindCardHover() {
   document.querySelectorAll('.c-card, .hcard, .stat-card, .cert-item, .skill-block, .cv-card').forEach(el => {
     el.addEventListener('mouseenter', () => ring.classList.add('card-hov'));
