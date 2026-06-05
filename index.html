@@ -575,7 +575,41 @@
     }
     .abt-pill-wrap .s-label { opacity: .5; }
     .abt-reveal {
-      max-width: 880px; margin: 0 auto; padding: 0 48px 140px;
+      max-width: 880px; margin: 0 auto; padding: 0 48px 80px;
+    }
+
+    /* Honduras + Globe */
+    .hn-globe-row {
+      display: flex; align-items: center; gap: 56px;
+      margin-top: 64px; padding-top: 52px;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .hn-text { flex: 1; }
+    .hn-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .hn-heading {
+      font-size: clamp(22px, 3.5vw, 32px); font-weight: 800;
+      letter-spacing: -1px; color: #fff; line-height: 1.15; margin-bottom: 16px;
+    }
+    .hn-body {
+      font-size: 14.5px; color: var(--muted); line-height: 1.8; margin-bottom: 20px;
+    }
+    .hn-flag {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12.5px; color: rgba(255,255,255,.4);
+    }
+    .hn-flag-pin { font-style: normal; }
+    .hn-globe-wrap {
+      flex-shrink: 0;
+      position: relative; width: 280px; height: 280px;
+    }
+    #globe-canvas { display: block; }
+    @media (max-width: 768px) {
+      .hn-globe-row { flex-direction: column; gap: 36px; }
+      .hn-globe-wrap { width: 220px; height: 220px; }
+      #globe-canvas { width: 220px !important; height: 220px !important; }
     }
     .abt-body {
       font-size: 16px; color: var(--muted); line-height: 1.82;
@@ -1156,7 +1190,7 @@
     /* ── CV SECTION ──────────────────────────────────── */
     #cv-section { padding: 80px 0 40px; }
     /* ── CV TERMINAL ──────────────────────────────── */
-    .cv-terminal-wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+    .cv-terminal-wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .cv-term {
       width: 100%;
       background: rgba(10,10,18,.97);
@@ -1180,7 +1214,7 @@
       font-family: 'SF Mono','Fira Code','Cascadia Code',monospace;
     }
     .cv-term-body {
-      padding: 22px 26px 26px; min-height: 210px;
+      padding: 16px 20px 18px; min-height: 150px;
       font-family: 'SF Mono','Fira Code','Cascadia Code',monospace;
       font-size: 13px; line-height: 1.85;
     }
@@ -1475,7 +1509,6 @@
       background: linear-gradient(135deg, #555, #333); border: 1px solid #666;
       box-shadow: 0 2px 6px rgba(0,0,0,.5);
     }
-    /* 3D card wrapper handles swing + tilt */
     .id-card-wrap {
       position: relative;
       transform-style: preserve-3d;
@@ -2414,6 +2447,20 @@
           </div>
         </div>
       </div>
+    <!-- Honduras + Globe row -->
+    <div class="hn-globe-row abt-fade-el" style="transition-delay:.6s">
+      <div class="hn-text">
+        <p class="hn-eyebrow" data-i18n="hn_eyebrow">Based in Honduras</p>
+        <h3 class="hn-heading" data-i18n="hn_heading">Every project ships to real users.</h3>
+        <p class="hn-body" data-i18n="hn_body">I'm a CS student at UNICAH in Tegucigalpa, Honduras. The systems I build aren't demos — a pig farm SaaS, a gas station POS, a Shopify store, and more run in production right now, used by real clients every day.</p>
+        <div class="hn-flag">
+          <span class="hn-flag-pin">📍</span>
+          <span data-i18n="hn_location">Tegucigalpa, Honduras · Central America</span>
+        </div>
+      </div>
+      <div class="hn-globe-wrap">
+        <canvas id="globe-canvas" width="280" height="280"></canvas>
+      </div>
     </div>
   </div>
 </section>
@@ -2481,9 +2528,9 @@
 <!-- CV SECTION -->
 <section id="cv-section" class="page-section">
   <div class="container">
-    <div class="card reveal" data-anim="right" style="padding:48px 48px 44px;max-width:760px;margin:0 auto;width:100%">
+    <div class="card reveal" data-anim="right" style="padding:28px 32px 24px;max-width:760px;margin:0 auto;width:100%">
     <div class="cv-terminal-wrap">
-      <h2 style="text-align:center;margin-bottom:18px;font-size:clamp(40px,6vw,72px);font-weight:800;letter-spacing:-2px;color:#fff;line-height:1" data-i18n="cv_title">Resume</h2>
+      <h2 style="text-align:center;margin-bottom:10px;font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-2px;color:#fff;line-height:1" data-i18n="cv_title">Resume</h2>
       <div class="cv-term">
         <div class="cv-term-bar">
           <span class="cv-tdot cv-tdot--r"></span>
@@ -3735,6 +3782,10 @@ const T = {
     stat1:       'Production systems running today',
     stat2:       'Certifications — Google, Microsoft, Cisco',
     stat3:       'Languages — Spanish & English',
+    hn_eyebrow:  'Based in Honduras',
+    hn_heading:  'Every project ships to real users.',
+    hn_body:     "I'm a CS student at UNICAH in Tegucigalpa, Honduras. The systems I build aren't demos — a pig farm SaaS, a gas station POS, a Shopify store, and more run in production right now, used by real clients every day.",
+    hn_location: 'Tegucigalpa, Honduras · Central America',
     proj_lbl:    'Projects',
     proj_ttl:    "What I've shipped.",
     cv_ttl:      'My Resume',
@@ -3820,6 +3871,10 @@ const T = {
     stat1:       'Sistemas en producción hoy',
     stat2:       'Certificaciones — Google, Microsoft, Cisco',
     stat3:       'Idiomas — Español e Inglés',
+    hn_eyebrow:  'Con base en Honduras',
+    hn_heading:  'Cada proyecto llega a usuarios reales.',
+    hn_body:     'Soy estudiante de Informática en la UNICAH en Tegucigalpa, Honduras. Los sistemas que construyo no son demos — un SaaS para granjas porcinas, un POS para gasolinera, una tienda Shopify y más corren en producción ahora mismo, usados por clientes reales cada día.',
+    hn_location: 'Tegucigalpa, Honduras · Centroamérica',
     proj_lbl:    'Proyectos',
     proj_ttl:    'Lo que he construido.',
     cv_ttl:      'Mi Currículum',
@@ -4363,6 +4418,124 @@ window.pageNav = function() {};
 
   renderCat('lang');
   window.renderMacActive = function() { renderCat(activeCat); };
+})();
+
+/* ── GLOBE (particle) ────────────────────────────── */
+(function initGlobe() {
+  const cvs = document.getElementById('globe-canvas');
+  if (!cvs) return;
+
+  const DPR  = Math.min(window.devicePixelRatio || 1, 2);
+  const SIZE = 280;
+  cvs.width  = SIZE * DPR;
+  cvs.height = SIZE * DPR;
+  const ctx  = cvs.getContext('2d');
+  ctx.scale(DPR, DPR);
+
+  const R  = SIZE / 2 - 6;
+  const CX = SIZE / 2;
+  const CY = SIZE / 2;
+  const HN_LAT = 14.1, HN_LON = -87.2;
+
+  function project(lat, lon, ry) {
+    const phi   = (90 - lat) * Math.PI / 180;
+    const theta = (lon + ry)  * Math.PI / 180;
+    return {
+      x: CX + R * Math.sin(phi) * Math.cos(theta),
+      y: CY - R * Math.cos(phi),
+      z:      R * Math.sin(phi) * Math.sin(theta)
+    };
+  }
+
+  /* ── Build particle arrays once ─────────────────── */
+  const LAND = [
+    [[70,-141],[70,-60],[50,-55],[45,-53],[42,-50],[25,-77],[10,-75],[8,-77],[8,-83],[10,-84],[20,-87],[16,-88],[15,-89],[14,-90],[14,-92],[16,-94],[20,-97],[22,-97],[25,-97],[30,-97],[30,-95],[29,-95],[25,-80],[25,-79],[28,-81],[30,-81],[35,-75],[40,-74],[42,-70],[45,-67],[47,-70],[50,-65],[50,-55],[55,-57],[55,-60],[58,-68],[60,-65],[62,-65],[63,-68],[65,-68],[70,-68],[72,-60],[72,-55],[60,-50],[60,-47],[65,-40],[68,-25],[70,-22],[72,-18],[70,-16],[68,-14],[65,-17],[60,-42],[60,-47],[55,-57],[50,-55],[45,-53],[42,-50],[25,-77],[10,-75],[8,-77]],
+    [[16,-88],[15,-89],[14,-90],[14,-92],[16,-94],[20,-97],[22,-97],[25,-97],[30,-97],[30,-95],[29,-95],[25,-80],[21,-87],[14,-87],[10,-83],[8,-77],[8,-83],[10,-84],[20,-87],[16,-88]],
+    [[10,-75],[8,-77],[8,-60],[0,-50],[-5,-35],[-10,-37],[-15,-39],[-20,-40],[-25,-43],[-30,-50],[-33,-53],[-35,-57],[-40,-62],[-45,-65],[-50,-68],[-55,-64],[-55,-67],[-50,-73],[-45,-73],[-40,-72],[-35,-70],[-30,-70],[-25,-70],[-20,-70],[-15,-75],[-10,-78],[-5,-78],[0,-78],[5,-77],[10,-75]],
+    [[71,28],[70,20],[68,14],[65,14],[62,5],[58,5],[52,3],[52,5],[50,3],[48,0],[44,-2],[43,3],[43,6],[44,8],[44,14],[42,14],[40,18],[38,15],[37,13],[38,15],[40,18],[42,14],[44,14],[44,8],[46,7],[48,7],[50,8],[52,8],[55,9],[55,15],[58,15],[60,18],[62,22],[65,25],[68,28],[71,28]],
+    [[37,10],[37,11],[35,12],[32,12],[30,32],[25,35],[20,37],[15,41],[10,42],[5,42],[0,42],[-5,39],[-10,40],[-15,37],[-20,35],[-25,33],[-30,30],[-35,20],[-35,17],[-30,15],[-25,15],[-20,13],[-15,12],[-10,15],[-5,10],[0,10],[5,2],[10,-2],[5,-5],[0,-5],[-5,-8],[0,-10],[5,-5],[10,-2],[5,2],[0,10],[-5,10],[-10,15],[-15,12],[-10,12],[-5,10],[5,2],[10,-2],[15,0],[15,5],[20,5],[25,5],[30,10],[35,10],[37,10]],
+    [[70,30],[70,50],[68,60],[65,65],[60,60],[55,55],[50,55],[45,55],[40,45],[35,35],[30,35],[25,57],[20,57],[15,42],[10,42],[5,42],[10,42],[15,41],[20,37],[25,35],[30,32],[35,36],[40,36],[45,38],[50,40],[55,38],[60,40],[65,42],[70,50],[72,60],[70,65],[70,70],[68,70],[65,68],[60,70],[55,68],[50,68],[45,65],[40,55],[45,50],[50,50],[55,55],[60,60],[65,65],[70,70],[72,75],[70,80],[68,80],[65,82],[60,82],[55,75],[55,68],[50,68],[45,65],[40,55],[35,55],[30,55],[25,60],[20,72],[15,75],[10,77],[5,80],[0,80],[5,102],[10,104],[15,108],[20,110],[25,121],[30,122],[35,130],[38,128],[35,130],[30,122],[25,121],[20,110],[15,108],[10,104],[5,102],[0,104],[0,110],[5,115],[10,120],[15,108],[10,98],[5,98],[0,100],[-5,105],[-5,108],[-8,115],[-8,120],[-5,120],[-5,108],[-8,115],[0,105],[5,100],[10,98],[15,102],[20,100],[25,100],[30,95],[35,95],[40,75],[45,60],[50,55],[55,55],[60,55],[65,55],[70,50],[70,30]],
+    [[-15,130],[-15,136],[-17,140],[-20,148],[-25,152],[-30,153],[-35,150],[-38,146],[-38,140],[-35,136],[-32,132],[-30,115],[-22,113],[-18,122],[-15,130]],
+  ];
+
+  /* Sample points along polylines at ~1 deg spacing */
+  const landPts = [];
+  LAND.forEach(poly => {
+    for (let i = 0; i < poly.length - 1; i++) {
+      const [la1, lo1] = poly[i], [la2, lo2] = poly[i + 1];
+      const d = Math.sqrt((la2-la1)**2 + (lo2-lo1)**2);
+      const n = Math.max(1, Math.round(d / 0.9));
+      for (let j = 0; j < n; j++) {
+        const t = j / n;
+        landPts.push([la1 + (la2-la1)*t, lo1 + (lo2-lo1)*t]);
+      }
+    }
+  });
+
+  /* Graticule dots: every 20 deg lat, every 30 deg lon, sampled every 2 deg */
+  const gratPts = [];
+  for (let lat = -80; lat <= 80; lat += 20)
+    for (let lon = -180; lon <= 180; lon += 2.5) gratPts.push([lat, lon]);
+  for (let lon = -180; lon < 180; lon += 30)
+    for (let lat = -85; lat <= 85; lat += 2.5) gratPts.push([lat, lon]);
+
+  let rotY = 0, pinPulse = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, SIZE, SIZE);
+
+    /* Graticule particles */
+    gratPts.forEach(([lat, lon]) => {
+      const p = project(lat, lon, rotY);
+      if (p.z <= 0) return;
+      const depth = p.z / R;                    /* 0..1, 1 = front */
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 0.55, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(100,100,100,${0.08 + depth * 0.1})`;
+      ctx.fill();
+    });
+
+    /* Land particles */
+    landPts.forEach(([lat, lon]) => {
+      const p = project(lat, lon, rotY);
+      if (p.z <= 0) return;
+      const depth = p.z / R;
+      const alpha = 0.25 + depth * 0.6;
+      const r     = 0.8  + depth * 0.7;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200,200,200,${alpha})`;
+      ctx.fill();
+    });
+
+    /* Honduras pin */
+    const hn = project(HN_LAT, HN_LON, rotY);
+    if (hn.z > 0) {
+      const pulse = (Math.sin(pinPulse) + 1) / 2;
+      ctx.beginPath();
+      ctx.arc(hn.x, hn.y, 5 + pulse * 9, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(248,113,113,${0.55 - pulse * 0.45})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(hn.x, hn.y, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#f87171';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(hn.x, hn.y, 1.8, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+    }
+
+    rotY      = (rotY + 0.18) % 360;
+    pinPulse += 0.045;
+    requestAnimationFrame(draw);
+  }
+
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { draw(); obs.disconnect(); }
+  }, { threshold: 0.1 });
+  obs.observe(cvs);
 })();
 </script>
 <div id="pn-overlay"></div>
