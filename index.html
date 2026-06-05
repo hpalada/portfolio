@@ -2000,10 +2000,23 @@
       .pfl-body { padding: 50px 16px 50px; }
       .pfl-title { font-size: clamp(20px, 5vw, 28px); }
 
-      /* Certifications */
+      /* Certifications: vertical stack, collapsed panel = horizontal row */
       .cert-accordion { flex-direction: column; height: auto; gap: 10px; }
       .ca-panel { flex: none; height: 64px; }
       .ca-panel.open { height: auto; min-height: 260px; }
+      .ca-collapsed {
+        flex-direction: row; align-items: center;
+        padding: 0 16px; gap: 12px;
+        justify-content: flex-start;
+      }
+      .ca-label-v {
+        writing-mode: horizontal-tb; text-orientation: mixed;
+        font-size: 13px; letter-spacing: .5px;
+      }
+      .ca-count {
+        position: static; transform: none;
+        margin-left: auto; font-size: 12px;
+      }
 
       /* About stats: wrap instead of single overflowing row */
       .abt-stats { gap: 16px; flex-wrap: wrap; justify-content: center; }
