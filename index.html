@@ -39,7 +39,7 @@
       --a-brd:      rgba(251,191,36,0.22);
       --r: 0.12;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       font-family: 'Poppins', system-ui, sans-serif;
       background: radial-gradient(ellipse at 50% 0%, #080810 0%, #000000 55%);
@@ -2004,6 +2004,17 @@
       .cert-accordion { flex-direction: column; height: auto; gap: 10px; }
       .ca-panel { flex: none; height: 64px; }
       .ca-panel.open { height: auto; min-height: 260px; }
+
+      /* About stats: wrap instead of single overflowing row */
+      .abt-stats { gap: 16px; flex-wrap: wrap; justify-content: center; }
+      .abt-stat-item .stat-num { font-size: 42px; }
+
+      /* Carousel: clip overflow, simplify to single active card */
+      .proj-carousel-outer { overflow: hidden; height: auto; min-height: 360px; padding-top: 8px; }
+      .c-card { width: min(88vw, 340px) !important; min-height: auto !important; padding: 20px !important; }
+      .c-card.pos-right1, .c-card.pos-right2,
+      .c-card.pos-left1,  .c-card.pos-left2 { opacity: 0 !important; pointer-events: none !important; }
+      .c-card.pos-active { transform: translate(-50%, -50%) !important; }
     }
 
     /* Tiny screens ≤ 420px */
