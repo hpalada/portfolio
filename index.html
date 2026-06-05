@@ -564,12 +564,12 @@
     }
 
     /* ── ABOUT ───────────────────────────────────────── */
-    #about { padding: 0; min-height: 150vh; }
+    #about { padding: 80px 0 60px; }
 
     /* pill wrap — creates the vertical offset so pill starts centered */
     .abt-pill-wrap {
-      padding-top: calc(44vh - 80px);
-      padding-bottom: 56px;
+      padding-top: 0;
+      padding-bottom: 48px;
       display: flex; flex-direction: column;
       align-items: center; gap: 20px;
     }
@@ -612,9 +612,8 @@
       display: inline-flex; align-items: center; gap: 14px;
       background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.13);
       border-radius: 100px; padding: 16px 32px 16px 24px;
-      position: sticky; top: 28px; z-index: 5;
       overflow: hidden; cursor: default;
-      transform-origin: center top;
+      transform-origin: center;
     }
     .abt-plus { font-size: 20px; color: var(--accent); font-weight: 300; line-height: 1; }
     .abt-label { font-size: 19px; font-weight: 700; color: #fff; letter-spacing: -.5px; }
@@ -1155,7 +1154,7 @@
     .proj-detail-btn:hover { opacity: 1; }
 
     /* ── CV SECTION ──────────────────────────────────── */
-    #cv-section { min-height: auto; padding: 100px 0 40px; }
+    #cv-section { padding: 80px 0 40px; }
     /* ── CV TERMINAL ──────────────────────────────── */
     .cv-terminal-wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 28px; }
     .cv-term {
@@ -1241,7 +1240,7 @@
     }
 
     /* ── CERTS ───────────────────────────────────────── */
-    #certifications { padding: 110px 0 100px; }
+    #certifications { padding: 80px 0 80px; }
     #certifications .s-title { font-family: 'Poppins', sans-serif; font-weight: 700; }
 
     /* accordion row */
@@ -1349,7 +1348,7 @@
     .certs-grid, .cfl, .cfl-inner, .cfl-front, .cfl-back { display: none; }
 
     /* ── CONTACT ─────────────────────────────────────── */
-    #contact { padding: 80px 0 130px; }
+    #contact { padding: 80px 0 100px; }
     .contact-wrap { max-width: 720px; margin: 0 auto; padding: 56px 64px; text-align: center; }
     .contact-headline {
       font-family: 'Bebas Neue', sans-serif;
@@ -1369,8 +1368,8 @@
 
 
     /* ── EXPERIENCE / EDUCATION / NOW ───────────────── */
-    #experience { padding: 110px 0 60px; }
-    #now        { padding: 110px 0 80px; }
+    #experience { padding: 80px 0 60px; }
+    #now        { padding: 80px 0 80px; }
 
     .exp-grid { display: flex; flex-direction: column; gap: 0; }
     .exp-item {
@@ -1883,18 +1882,11 @@
     .reveal[data-anim="blur"]  { transform: translateY(14px); filter: blur(10px); transition: opacity .7s ease, transform .7s ease, filter .7s ease; }
     .reveal.in { opacity: 1; transform: none !important; filter: none !important; }
 
-    /* ── FULL-PAGE SECTIONS ─────────────────────────── */
-    .page-section { min-height: 100vh; scroll-margin-top: 84px; transition: opacity .7s ease; }
+    /* ── SECTIONS ───────────────────────────────────── */
+    .page-section { scroll-margin-top: 84px; }
     body.cv-active .page-section:not(#cv-section) { opacity: 0; pointer-events: none; }
-    #cv-section { transition: opacity .7s ease; }
 
-    /* page-transition overlay */
-    #pn-overlay {
-      position: fixed; inset: 0; z-index: 9998;
-      background: #000; opacity: 0; pointer-events: none;
-      transition: opacity .22s ease-in;
-    }
-    #pn-overlay.pn-dark { opacity: 1; pointer-events: all; }
+    #pn-overlay { display: none; }
     /* Side navigation arrows */
     .page-nav {
       position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
@@ -1949,9 +1941,7 @@
       /* Container: fix 48px → 16px — this is the #1 issue */
       .container { padding: 0 16px; }
 
-      /* Sections: full-height snap, except content-heavy ones */
       #hero { min-height: 100svh; min-height: 100vh; }
-      #about, #experience, #certifications { min-height: auto !important; }
 
       /* Hide desktop-only chrome */
       .page-nav, .page-label, .scroll-bar { display: none !important; }
@@ -2333,7 +2323,7 @@
 
   <!-- Pill header — starts big-centered, sticks at top on scroll -->
   <div class="abt-pill-wrap">
-    <p class="s-label" data-i18n="about_lbl">About</p>
+    <p class="s-label reveal" data-anim="blur" data-i18n="about_lbl">About</p>
     <div class="about-btn-title" id="abt-pill">
       <span class="abt-plus">+</span>
       <span class="abt-label" data-i18n="about_build">Build Things</span>
@@ -2435,9 +2425,9 @@
     <!-- Section header -->
     <div class="proj-sec-hdr">
       <div class="proj-sec-glow"></div>
-      <p class="s-label" data-i18n="proj_hdr_lbl">Projects</p>
-      <h2 class="proj-sec-h2" data-i18n="proj_hdr_ttl">What I build.</h2>
-      <p class="proj-sec-stats" data-i18n="proj_hdr_stats">11 projects · 3 production · 2 mobile</p>
+      <p class="s-label reveal" data-anim="blur" data-i18n="proj_hdr_lbl">Projects</p>
+      <h2 class="proj-sec-h2 reveal" data-anim="up" data-i18n="proj_hdr_ttl">What I build.</h2>
+      <p class="proj-sec-stats reveal" data-anim="up" data-i18n="proj_hdr_stats">11 projects · 3 production · 2 mobile</p>
     </div>
 
     <!-- Ticker -->
@@ -4116,92 +4106,8 @@ initCardTilt();
   draw();
 })();
 
-/* ── PAGE NAV (overlay fade) ─────────────────────── */
-(function initPageNav() {
-  var IDS     = ['hero','hero-intro','about','projects','cv-section','certifications','experience','contact'];
-  var LABELS  = ['Home','Intro','About','Projects','Resume','Certifications','Experience','Contact'];
-  var labelEl = document.getElementById('page-label');
-  var upBtn   = document.getElementById('pnav-up');
-  var downBtn = document.getElementById('pnav-down');
-  var sections= IDS.map(function(id){ return document.getElementById(id); }).filter(Boolean);
-  var current = 0, busy = false;
-
-  function updateBtns() {
-    if (upBtn)   upBtn.disabled   = current <= 0;
-    if (downBtn) downBtn.disabled = current >= sections.length - 1;
-    if (labelEl) {
-      labelEl.textContent = LABELS[current];
-      labelEl.classList.add('show');
-      clearTimeout(labelEl._t);
-      labelEl._t = setTimeout(function(){ labelEl.classList.remove('show'); }, 1600);
-    }
-  }
-
-  function navigate(dir) {
-    var ni = current + dir;
-    if (ni < 0 || ni >= sections.length || busy) return;
-    busy = true;
-    var ov = document.getElementById('pn-overlay');
-    if (ov) { ov.style.transition = 'opacity .22s ease-in'; ov.classList.add('pn-dark'); }
-
-    setTimeout(function() {
-      sections[ni].scrollIntoView({ behavior: 'instant', block: 'start' });
-      current = ni;
-      updateBtns();
-      if (ov) { ov.style.transition = 'opacity .38s ease-out'; ov.classList.remove('pn-dark'); }
-      setTimeout(function() { busy = false; }, 600);
-    }, 240);
-  }
-
-  window.pageNav = function(dir) { navigate(dir); };
-  updateBtns();
-
-  /* wheel — desktop only */
-  var wLock = false;
-  window.addEventListener('wheel', function(e) {
-    if (window.innerWidth <= 768) return;
-    var go = e.deltaY > 0 ? 1 : -1;
-    var r  = sections[current].getBoundingClientRect();
-    var hit = (go > 0 && r.bottom <= window.innerHeight + 4) ||
-              (go < 0 && r.top >= -4);
-    if (hit) {
-      e.preventDefault();
-      if (!wLock && !busy) {
-        wLock = true;
-        setTimeout(function(){ wLock = false; }, 1000);
-        navigate(go);
-      }
-    }
-  }, { passive: false });
-
-  /* touch swipe — navigate only when at section boundary */
-  var ty = 0;
-  window.addEventListener('touchstart', function(e){ ty = e.touches[0].clientY; }, { passive: true });
-  window.addEventListener('touchend',   function(e){
-    var dy = ty - e.changedTouches[0].clientY;
-    if (Math.abs(dy) < 80) return;
-    var go = dy > 0 ? 1 : -1;
-    var r  = sections[current].getBoundingClientRect();
-    var atEdge = (go > 0 && r.bottom <= window.innerHeight + 12) ||
-                 (go < 0 && r.top    >= -12);
-    if (atEdge) navigate(go);
-  }, { passive: true });
-
-  /* sync current on free scroll */
-  window.addEventListener('scroll', function(){
-    if (busy) return;
-    var best = current, bv = -1;
-    sections.forEach(function(s, i){
-      var r = s.getBoundingClientRect();
-      var v = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
-      if (v > bv) { bv = v; best = i; }
-    });
-    if (best !== current) { current = best; updateBtns(); }
-  }, { passive: true });
-
-  /* auto-advance: welcome → intro */
-  setTimeout(function(){ if (current === 0) navigate(1); }, 3800);
-})();
+/* ── PAGE NAV (removed — free scroll) ───────────── */
+window.pageNav = function() {};
 
 /* ── EXP TIMELINE INTRO ──────────────────────────── */
 (function initExpTimeline() {
@@ -4384,62 +4290,36 @@ initCardTilt();
     });
   }
 
-  function update() {
-    var rect     = section.getBoundingClientRect();
-    var scrolled = -rect.top;   /* px scrolled into section */
-    var vh       = window.innerHeight;
-    /* stickyPoint: scroll at which pill reaches top:28px (its sticky pos) */
-    var stickyPoint = Math.max(1, 0.44 * vh - 80 - 28);
-    var p = Math.max(0, Math.min(1, scrolled / stickyPoint));
-
-    /* pill: scale 1.6 → 1.0  (stays visible, no opacity change) */
-    var scale = 1 + (1 - p) * 0.60;
-    pill.style.transform = 'scale(' + scale.toFixed(3) + ')';
-
-    /* stagger reveal — start at 55% */
-    fadeEls.forEach(function(el, i) {
-      if (p > 0.50 + i * 0.08) el.classList.add('abt-visible');
-    });
-
-    if (p > 0.60) runCounters();
-  }
-
-  /* On mobile: IntersectionObserver-driven animations */
-  if (window.innerWidth <= 768) {
-    pill.style.transform = 'scale(1.35)';
-    pill.style.opacity = '0';
-    pill.style.transition = 'transform .7s cubic-bezier(.22,1,.36,1), opacity .45s ease';
-    var pillObs = new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting) {
-        pill.style.transform = 'scale(1)';
-        pill.style.opacity = '1';
-        pillObs.disconnect();
-      }
-    }, { threshold: 0.5 });
-    pillObs.observe(pill);
-
-    var fadeObs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('abt-visible');
-          fadeObs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    fadeEls.forEach(function(el) { fadeObs.observe(el); });
-
-    var statsEl = reveal ? reveal.querySelector('.abt-stats') : null;
-    if (statsEl) {
-      var ctrObs = new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting) { runCounters(); ctrObs.disconnect(); }
-      }, { threshold: 0.3 });
-      ctrObs.observe(statsEl);
+  /* Pill: animate in when it enters view */
+  pill.style.transform = 'scale(1.25)';
+  pill.style.opacity = '0';
+  pill.style.transition = 'transform .75s cubic-bezier(.22,1,.36,1), opacity .5s ease';
+  new IntersectionObserver(function(entries, obs) {
+    if (entries[0].isIntersecting) {
+      pill.style.transform = 'scale(1)';
+      pill.style.opacity = '1';
+      obs.disconnect();
     }
-    return;
-  }
+  }, { threshold: 0.5 }).observe(pill);
 
-  window.addEventListener('scroll', update, { passive: true });
-  update();
+  /* Fade elements: staggered reveal on scroll */
+  var fadeObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('abt-visible');
+        fadeObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(function(el) { fadeObs.observe(el); });
+
+  /* Counters: fire when stats row is visible */
+  var statsEl = reveal ? reveal.querySelector('.abt-stats') : null;
+  if (statsEl) {
+    new IntersectionObserver(function(entries, obs) {
+      if (entries[0].isIntersecting) { runCounters(); obs.disconnect(); }
+    }, { threshold: 0.3 }).observe(statsEl);
+  }
 })();
 
 (function initMacFolders() {
