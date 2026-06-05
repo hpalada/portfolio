@@ -564,7 +564,7 @@
     }
 
     /* ── ABOUT ───────────────────────────────────────── */
-    #about { padding: 0; }
+    #about { padding: 0; min-height: 150vh; }
 
     /* pill wrap — creates the vertical offset so pill starts centered */
     .abt-pill-wrap {
@@ -1948,6 +1948,59 @@
       .cv-card { padding: 28px 24px; }
     }
 
+    /* ── MOBILE CORE (≤768px) ───────────────────────── */
+    @media (max-width: 768px) {
+      /* Let sections size to content — no forced full-height */
+      .page-section { min-height: auto !important; }
+      #hero { min-height: 100svh; min-height: 100vh; } /* keep welcome full screen */
+
+      /* Hide desktop-only controls */
+      .page-nav, .page-label, .scroll-bar { display: none !important; }
+
+      /* Hero card — compact padding */
+      .hero-card { padding: 28px 20px 24px; border-radius: 20px; }
+      .hero-card-inner { gap: 20px; }
+      .hero-chips { justify-content: center; }
+      .hero-actions { justify-content: center; flex-wrap: wrap; }
+      .hero-edu { text-align: center; justify-content: center; }
+
+      /* About */
+      #about { min-height: auto !important; }
+      .abt-body p { font-size: 14px; }
+
+      /* Skills mac window */
+      .mac-win { width: 100%; }
+      .mac-folders-grid { gap: 6px; }
+      .mac-folder { padding: 8px 6px; }
+      .mac-folder-lbl { font-size: 9px; }
+
+      /* Experience left column narrower */
+      .exp-item { grid-template-columns: 110px 1fr; gap: 0 18px; }
+
+      /* Now cards full width */
+      .now-card { flex: 1 1 100%; }
+
+      /* CV card padding */
+      .cv-terminal-wrap { padding: 0; }
+
+      /* Contact wrap */
+      .contact-wrap { padding: 32px 20px; }
+      .contact-headline { font-size: 32px; }
+
+      /* Projects folder */
+      .pfl-body { padding: 60px 18px 60px; }
+      .pfl-title { font-size: clamp(22px, 5vw, 32px); }
+    }
+
+    /* Tiny screens ≤ 400px */
+    @media (max-width: 400px) {
+      .hero-name { font-size: 34px; letter-spacing: -2px; }
+      .id-card-col { display: none; }
+      .hero-card { padding: 22px 16px; }
+      .exp-item { grid-template-columns: 1fr; }
+      .exp-left { text-align: left; padding-bottom: 4px; }
+    }
+
     /* ── HAMBURGER MENU ─────────────────────────────── */
     .nav-burger {
       display: none; flex-direction: column; justify-content: center; gap: 5px;
@@ -2245,7 +2298,7 @@
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="page-section" style="min-height:150vh">
+<section id="about" class="page-section">
 
   <!-- Pill header — starts big-centered, sticks at top on scroll -->
   <div class="abt-pill-wrap">
@@ -4070,9 +4123,10 @@ initCardTilt();
   window.pageNav = function(dir) { navigate(dir); };
   updateBtns();
 
-  /* wheel — trigger at section boundary */
+  /* wheel — desktop only */
   var wLock = false;
   window.addEventListener('wheel', function(e) {
+    if (window.innerWidth <= 768) return;
     var go = e.deltaY > 0 ? 1 : -1;
     var r  = sections[current].getBoundingClientRect();
     var hit = (go > 0 && r.bottom <= window.innerHeight + 4) ||
@@ -4087,12 +4141,13 @@ initCardTilt();
     }
   }, { passive: false });
 
-  /* touch swipe */
+  /* touch swipe — desktop only; mobile scrolls freely */
   var ty = 0;
   window.addEventListener('touchstart', function(e){ ty = e.touches[0].clientY; }, { passive: true });
   window.addEventListener('touchend',   function(e){
+    if (window.innerWidth <= 768) return;
     var dy = ty - e.changedTouches[0].clientY;
-    if (Math.abs(dy) > 50) navigate(dy > 0 ? 1 : -1);
+    if (Math.abs(dy) > 80) navigate(dy > 0 ? 1 : -1);
   }, { passive: true });
 
   /* sync current on free scroll */
@@ -4310,6 +4365,14 @@ initCardTilt();
     });
 
     if (p > 0.60) runCounters();
+  }
+
+  /* On mobile, reveal immediately — no scroll space to animate through */
+  if (window.innerWidth <= 768) {
+    pill.style.transform = 'scale(1)';
+    fadeEls.forEach(function(el) { el.classList.add('abt-visible'); });
+    runCounters();
+    return;
   }
 
   window.addEventListener('scroll', update, { passive: true });
