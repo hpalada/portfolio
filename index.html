@@ -4291,16 +4291,16 @@ window.pageNav = function() {};
   }
 
   /* Pill: animate in when it enters view */
-  pill.style.transform = 'scale(1.25)';
+  pill.style.transform = 'scale(1.45) translateY(18px)';
   pill.style.opacity = '0';
-  pill.style.transition = 'transform .75s cubic-bezier(.22,1,.36,1), opacity .5s ease';
+  pill.style.transition = 'transform .8s cubic-bezier(.22,1,.36,1), opacity .55s ease';
   new IntersectionObserver(function(entries, obs) {
     if (entries[0].isIntersecting) {
-      pill.style.transform = 'scale(1)';
+      pill.style.transform = 'scale(1) translateY(0)';
       pill.style.opacity = '1';
       obs.disconnect();
     }
-  }, { threshold: 0.5 }).observe(pill);
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }).observe(pill);
 
   /* Fade elements: staggered reveal on scroll */
   var fadeObs = new IntersectionObserver(function(entries) {
