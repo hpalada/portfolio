@@ -2021,7 +2021,7 @@
     @media (max-width: 420px) {
       .container { padding: 0 14px; }
       .hero-name { font-size: clamp(32px, 8.5vw, 42px); }
-      .id-card-col { display: none; }
+      .id-card { width: 180px; }
       .hero-card { padding: 20px 14px; }
       .exp-item { grid-template-columns: 1fr; }
       .exp-left { text-align: left; padding-bottom: 4px; border-left: 1px solid rgba(255,255,255,.1); padding-left: 20px; }
@@ -4382,11 +4382,37 @@ initCardTilt();
     if (p > 0.60) runCounters();
   }
 
-  /* On mobile, reveal immediately — no scroll space to animate through */
+  /* On mobile: IntersectionObserver-driven animations */
   if (window.innerWidth <= 768) {
-    pill.style.transform = 'scale(1)';
-    fadeEls.forEach(function(el) { el.classList.add('abt-visible'); });
-    runCounters();
+    pill.style.transform = 'scale(1.35)';
+    pill.style.opacity = '0';
+    pill.style.transition = 'transform .7s cubic-bezier(.22,1,.36,1), opacity .45s ease';
+    var pillObs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        pill.style.transform = 'scale(1)';
+        pill.style.opacity = '1';
+        pillObs.disconnect();
+      }
+    }, { threshold: 0.5 });
+    pillObs.observe(pill);
+
+    var fadeObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('abt-visible');
+          fadeObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    fadeEls.forEach(function(el) { fadeObs.observe(el); });
+
+    var statsEl = reveal ? reveal.querySelector('.abt-stats') : null;
+    if (statsEl) {
+      var ctrObs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) { runCounters(); ctrObs.disconnect(); }
+      }, { threshold: 0.3 });
+      ctrObs.observe(statsEl);
+    }
     return;
   }
 
