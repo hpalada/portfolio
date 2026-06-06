@@ -28,9 +28,9 @@
       --border-h:   rgba(255,255,255,0.15);
       --text:       #edf0f8;
       --muted:      #717d94;
-      --accent:     #7db8ff;
-      --ac-dim:     rgba(125,184,255,0.11);
-      --ac-brd:     rgba(125,184,255,0.22);
+      --accent:     #d0d0d0;
+      --ac-dim:     rgba(255,255,255,0.07);
+      --ac-brd:     rgba(255,255,255,0.14);
       --green:      #4ade80;
       --g-dim:      rgba(74,222,128,0.1);
       --g-brd:      rgba(74,222,128,0.22);
@@ -580,36 +580,37 @@
 
     /* Honduras + Globe */
     .hn-globe-row {
-      display: flex; align-items: center; gap: 56px;
+      display: flex; align-items: center; gap: 48px;
       margin-top: 64px; padding-top: 52px;
       border-top: 1px solid rgba(255,255,255,.07);
     }
-    .hn-text { flex: 1; }
+    .hn-text { flex: 1; min-width: 0; }
     .hn-eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+      font-size: 12px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
     }
     .hn-heading {
-      font-size: clamp(22px, 3.5vw, 32px); font-weight: 800;
-      letter-spacing: -1px; color: #fff; line-height: 1.15; margin-bottom: 16px;
+      font-size: clamp(28px, 4vw, 46px); font-weight: 800;
+      letter-spacing: -1.5px; color: #fff; line-height: 1.1; margin-bottom: 20px;
     }
     .hn-body {
-      font-size: 14.5px; color: var(--muted); line-height: 1.8; margin-bottom: 20px;
+      font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 24px;
     }
     .hn-flag {
       display: flex; align-items: center; gap: 8px;
-      font-size: 12.5px; color: rgba(255,255,255,.4);
+      font-size: 13px; color: rgba(255,255,255,.4);
     }
     .hn-flag-pin { font-style: normal; }
     .hn-globe-wrap {
       flex-shrink: 0;
-      position: relative; width: 280px; height: 280px;
+      position: relative; width: 480px; height: 480px;
     }
-    #globe-canvas { display: block; }
+    #globe-canvas { display: block; width: 100%; height: 100%; }
+    #globe-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
     @media (max-width: 768px) {
-      .hn-globe-row { flex-direction: column; gap: 36px; }
-      .hn-globe-wrap { width: 220px; height: 220px; }
-      #globe-canvas { width: 220px !important; height: 220px !important; }
+      .hn-globe-row { flex-direction: column; gap: 32px; }
+      .hn-globe-wrap { width: 300px; height: 300px; }
+      .hn-heading { font-size: clamp(26px, 7vw, 36px); }
     }
     .abt-body {
       font-size: 16px; color: var(--muted); line-height: 1.82;
@@ -779,7 +780,7 @@
     #projects {
       display: flex; align-items: center; justify-content: center;
       min-height: auto;
-      padding: 100px 0 20px;
+      padding: 100px 0 0;
     }
     #projects > .container {
       display: flex; flex-direction: column; align-items: center;
@@ -1188,7 +1189,7 @@
     .proj-detail-btn:hover { opacity: 1; }
 
     /* ── CV SECTION ──────────────────────────────────── */
-    #cv-section { padding: 80px 0 40px; }
+    #cv-section { padding: 0 0 40px; }
     /* ── CV TERMINAL ──────────────────────────────── */
     .cv-terminal-wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .cv-term {
@@ -1478,6 +1479,45 @@
     .form-status { font-size: 13px; margin-top: 8px; text-align: center; min-height: 20px; }
     .form-status.ok  { color: var(--green); }
     .form-status.err { color: #f87171; }
+    /* sent overlay */
+    .contact-wrap { position: relative; overflow: hidden; }
+    .sent-overlay {
+      position: absolute; inset: 0; border-radius: inherit;
+      background: rgba(7,8,16,.93); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s ease;
+      z-index: 10;
+    }
+    .sent-overlay.active { opacity: 1; pointer-events: all; }
+    .sent-inner { text-align: center; }
+    .sent-svg { width: 88px; height: 88px; display: block; margin: 0 auto 22px; }
+    .sent-circle {
+      stroke-dasharray: 226; stroke-dashoffset: 226;
+      transform: rotate(-90deg); transform-origin: 50% 50%;
+    }
+    .sent-overlay.active .sent-circle {
+      animation: sent-circle .65s cubic-bezier(.4,0,.2,1) .05s forwards;
+    }
+    @keyframes sent-circle { to { stroke-dashoffset: 0; } }
+    .sent-check {
+      stroke-dasharray: 60; stroke-dashoffset: 60;
+    }
+    .sent-overlay.active .sent-check {
+      animation: sent-check .38s ease .68s forwards;
+    }
+    @keyframes sent-check { to { stroke-dashoffset: 0; } }
+    .sent-msg {
+      font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -.5px;
+      margin-bottom: 8px; opacity: 0; transform: translateY(10px);
+    }
+    .sent-overlay.active .sent-msg { animation: sent-up .38s ease .9s forwards; }
+    .sent-sub {
+      font-size: 13.5px; color: rgba(255,255,255,.45);
+      opacity: 0; transform: translateY(10px);
+    }
+    .sent-overlay.active .sent-sub { animation: sent-up .38s ease 1.05s forwards; }
+    @keyframes sent-up { to { opacity: 1; transform: none; } }
     @media (max-width: 600px) {
       .form-row { grid-template-columns: 1fr; }
       .exp-item, .edu-row { grid-template-columns: 1fr; }
@@ -2137,7 +2177,7 @@
     }
     @keyframes yr-pop {
       0%   { transform: scale(1); }
-      40%  { transform: scale(1.06); color: #7db8ff; }
+      40%  { transform: scale(1.06); color: #ffffff; }
       100% { transform: scale(1); }
     }
     .exp-yr-num.yr-pop { animation: yr-pop .35s ease-in-out; }
@@ -2164,7 +2204,7 @@
       animation: exp-item-in .5s ease forwards;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 </head>
 <body>
 
@@ -2459,7 +2499,7 @@
         </div>
       </div>
       <div class="hn-globe-wrap">
-        <canvas id="globe-canvas" width="280" height="280"></canvas>
+        <div id="globe-canvas"></div>
       </div>
     </div>
   </div>
@@ -2800,6 +2840,18 @@
         <button class="btn-solid" type="submit" style="width:100%" data-i18n="form_send">Send Message</button>
         <div class="form-status" id="form-status"></div>
       </form>
+
+      <!-- Success overlay -->
+      <div class="sent-overlay" id="sent-overlay" aria-hidden="true">
+        <div class="sent-inner">
+          <svg class="sent-svg" viewBox="0 0 80 80" fill="none">
+            <circle class="sent-circle" cx="40" cy="40" r="36" stroke="#4ade80" stroke-width="2.5"/>
+            <polyline class="sent-check" points="23,42 35,54 57,27" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <p class="sent-msg">Message sent.</p>
+          <p class="sent-sub">I'll get back to you soon.</p>
+        </div>
+      </div>
 
       <div class="social-row">
         <a href="mailto:homerjaredme@gmail.com" class="sbtn">
@@ -3376,6 +3428,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const wrap = document.querySelector('.pfl-wrap');
   if (wrap) {
     /* Cert accordion: hover opens, click pins open */
+  var firstPanel = document.querySelector('.ca-panel.open');
+  if (firstPanel) firstPanel.dataset.pinned = '1';
+
   document.querySelectorAll('.ca-panel').forEach(function(panel) {
     panel.addEventListener('mouseenter', function() {
       document.querySelectorAll('.ca-panel').forEach(function(p) { p.classList.remove('open'); });
@@ -3993,16 +4048,12 @@ function setLang(lang) {
 
 /* ── CONTACT FORM ───────────────────────────────── */
 /* ── EMAIL CONFIG ─── fill in after EmailJS setup ── */
-var EJS_PUBLIC_KEY  = '';  /* EmailJS > Account > Public Key */
-var EJS_SERVICE_ID  = '';  /* EmailJS > Email Services > Service ID */
-var EJS_TEMPLATE_ID = '';  /* EmailJS > Email Templates > Template ID */
-
 async function submitForm(e) {
   e.preventDefault();
-  const form   = e.target;
-  const status = document.getElementById('form-status');
-  const btn    = form.querySelector('button[type=submit]');
-  const t      = { ok: T[currentLang].form_ok, err: T[currentLang].form_err };
+  var form   = e.target;
+  var status = document.getElementById('form-status');
+  var btn    = form.querySelector('button[type=submit]');
+  var fd     = new FormData(form);
 
   btn.disabled = true;
   btn.textContent = '...';
@@ -4010,23 +4061,24 @@ async function submitForm(e) {
   status.className = 'form-status';
 
   try {
-    if (!EJS_PUBLIC_KEY) throw new Error('emailjs-not-configured');
-    emailjs.init({ publicKey: EJS_PUBLIC_KEY });
-    const fd = new FormData(form);
-    await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
-      from_name:  fd.get('name'),
-      from_email: fd.get('email'),
-      message:    fd.get('message'),
+    var res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    fd.get('name'),
+        email:   fd.get('email'),
+        message: fd.get('message'),
+      }),
     });
-    status.textContent = t.ok;
-    status.className = 'form-status ok';
+    if (!res.ok) throw new Error('fail');
+
     form.reset();
-  } catch (err) {
-    if (err.message === 'emailjs-not-configured') {
-      status.textContent = 'Email not configured yet.';
-    } else {
-      status.textContent = t.err;
-    }
+    var overlay = document.getElementById('sent-overlay');
+    overlay.classList.add('active');
+    setTimeout(function() { overlay.classList.remove('active'); }, 5000);
+
+  } catch (_) {
+    status.textContent = T[currentLang].form_err || 'Something went wrong. Try again.';
     status.className = 'form-status err';
   } finally {
     btn.disabled = false;
@@ -4063,7 +4115,7 @@ initCardTilt();
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const accordion = document.getElementById('cert-accordion');
-  const COLORS = ['#4285f4','#f25022','#1ba0d7','#7db8ff'];
+  const COLORS = ['#4285f4','#f25022','#1ba0d7','#c8c8c8'];
   const particles = [];
   let W, H, frame = 0;
 
@@ -4169,11 +4221,27 @@ window.pageNav = function() {};
   var section = document.getElementById('experience');
   if (!section) return;
 
+  var tlPlayed = false;
+
   new IntersectionObserver(function(entries, obs) {
-    if (!entries[0].isIntersecting) return;
+    if (!entries[0].isIntersecting || tlPlayed) return;
+    tlPlayed = true;
     obs.disconnect();
+
+    /* Lock scroll at current position while animation runs */
+    var lockedY = Math.round(window.scrollY);
+    function holdScroll() {
+      if (window.scrollY > lockedY + 30) window.scrollTo(0, lockedY);
+    }
+    window.addEventListener('scroll', holdScroll, { passive: true });
+
+    /* Line = 1800ms, 4 items × 160ms stagger + ~300ms fade = ~2500ms total */
+    setTimeout(function() {
+      window.removeEventListener('scroll', holdScroll);
+    }, 2700);
+
     runExpAnim();
-  }, { threshold: 0.15 }).observe(section);
+  }, { threshold: 0.2 }).observe(section);
 
   function cubicBezier(t, p0, p1, p2, p3) {
     var m = 1 - t;
@@ -4267,7 +4335,7 @@ window.pageNav = function() {};
           var tipT = Math.min(1, (maxSeg + 0.5) / SEGS);
           var tip  = cubicBezier(tipT, P0, P1, P2, P3);
           ctx.save();
-          ctx.shadowColor = '#7db8ff'; ctx.shadowBlur = 20;
+          ctx.shadowColor = '#ffffff'; ctx.shadowBlur = 16;
           ctx.beginPath();
           ctx.arc(tip.x, tip.y, 4, 0, Math.PI * 2);
           ctx.fillStyle = 'white'; ctx.fill();
@@ -4422,120 +4490,169 @@ window.pageNav = function() {};
 
 /* ── GLOBE (particle) ────────────────────────────── */
 (function initGlobe() {
-  const cvs = document.getElementById('globe-canvas');
-  if (!cvs) return;
+  if (typeof THREE === 'undefined') return;
+  var container = document.getElementById('globe-canvas');
+  if (!container) return;
 
-  const DPR  = Math.min(window.devicePixelRatio || 1, 2);
-  const SIZE = 280;
-  cvs.width  = SIZE * DPR;
-  cvs.height = SIZE * DPR;
-  const ctx  = cvs.getContext('2d');
-  ctx.scale(DPR, DPR);
+  var SIZE = 480;
+  var DPR  = Math.min(window.devicePixelRatio || 1, 2);
+  var R    = 3.5;
 
-  const R  = SIZE / 2 - 6;
-  const CX = SIZE / 2;
-  const CY = SIZE / 2;
-  const HN_LAT = 14.1, HN_LON = -87.2;
+  var scene  = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  camera.position.z = 18;
 
-  function project(lat, lon, ry) {
-    const phi   = (90 - lat) * Math.PI / 180;
-    const theta = (lon + ry)  * Math.PI / 180;
-    return {
-      x: CX + R * Math.sin(phi) * Math.cos(theta),
-      y: CY - R * Math.cos(phi),
-      z:      R * Math.sin(phi) * Math.sin(theta)
-    };
+  var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(SIZE, SIZE);
+  renderer.setPixelRatio(DPR);
+  container.appendChild(renderer.domElement);
+  renderer.domElement.style.cssText = 'display:block;width:100%;height:100%;cursor:grab;touch-action:none';
+
+  var worldGroup = new THREE.Group();
+  scene.add(worldGroup);
+
+  var N = 35000;
+  var basePos = new Float32Array(N * 3);
+  for (var i = 0; i < N; i++) {
+    var k     = i + 0.5;
+    var phi   = Math.acos(1 - 2 * k / N);
+    var theta = Math.PI * (1 + Math.sqrt(5)) * k;
+    var r     = R * (0.96 + Math.random() * 0.03);
+    basePos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+    basePos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+    basePos[i*3+2] = r * Math.cos(phi);
+  }
+  var baseGeo = new THREE.BufferGeometry();
+  baseGeo.setAttribute('position', new THREE.BufferAttribute(basePos, 3));
+  worldGroup.add(new THREE.Points(baseGeo, new THREE.PointsMaterial({ color: 0x555555, size: 0.018, sizeAttenuation: true })));
+
+  function toXYZ(lat, lon, rad) {
+    var p = (90 - lat) * Math.PI / 180;
+    var t = (lon + 180) * Math.PI / 180;
+    return new THREE.Vector3(
+      -(rad * Math.sin(p) * Math.sin(t)),
+        rad * Math.cos(p),
+        rad * Math.sin(p) * Math.cos(t)
+    );
   }
 
-  /* ── Build particle arrays once ─────────────────── */
-  const LAND = [
-    [[70,-141],[70,-60],[50,-55],[45,-53],[42,-50],[25,-77],[10,-75],[8,-77],[8,-83],[10,-84],[20,-87],[16,-88],[15,-89],[14,-90],[14,-92],[16,-94],[20,-97],[22,-97],[25,-97],[30,-97],[30,-95],[29,-95],[25,-80],[25,-79],[28,-81],[30,-81],[35,-75],[40,-74],[42,-70],[45,-67],[47,-70],[50,-65],[50,-55],[55,-57],[55,-60],[58,-68],[60,-65],[62,-65],[63,-68],[65,-68],[70,-68],[72,-60],[72,-55],[60,-50],[60,-47],[65,-40],[68,-25],[70,-22],[72,-18],[70,-16],[68,-14],[65,-17],[60,-42],[60,-47],[55,-57],[50,-55],[45,-53],[42,-50],[25,-77],[10,-75],[8,-77]],
-    [[16,-88],[15,-89],[14,-90],[14,-92],[16,-94],[20,-97],[22,-97],[25,-97],[30,-97],[30,-95],[29,-95],[25,-80],[21,-87],[14,-87],[10,-83],[8,-77],[8,-83],[10,-84],[20,-87],[16,-88]],
-    [[10,-75],[8,-77],[8,-60],[0,-50],[-5,-35],[-10,-37],[-15,-39],[-20,-40],[-25,-43],[-30,-50],[-33,-53],[-35,-57],[-40,-62],[-45,-65],[-50,-68],[-55,-64],[-55,-67],[-50,-73],[-45,-73],[-40,-72],[-35,-70],[-30,-70],[-25,-70],[-20,-70],[-15,-75],[-10,-78],[-5,-78],[0,-78],[5,-77],[10,-75]],
-    [[71,28],[70,20],[68,14],[65,14],[62,5],[58,5],[52,3],[52,5],[50,3],[48,0],[44,-2],[43,3],[43,6],[44,8],[44,14],[42,14],[40,18],[38,15],[37,13],[38,15],[40,18],[42,14],[44,14],[44,8],[46,7],[48,7],[50,8],[52,8],[55,9],[55,15],[58,15],[60,18],[62,22],[65,25],[68,28],[71,28]],
-    [[37,10],[37,11],[35,12],[32,12],[30,32],[25,35],[20,37],[15,41],[10,42],[5,42],[0,42],[-5,39],[-10,40],[-15,37],[-20,35],[-25,33],[-30,30],[-35,20],[-35,17],[-30,15],[-25,15],[-20,13],[-15,12],[-10,15],[-5,10],[0,10],[5,2],[10,-2],[5,-5],[0,-5],[-5,-8],[0,-10],[5,-5],[10,-2],[5,2],[0,10],[-5,10],[-10,15],[-15,12],[-10,12],[-5,10],[5,2],[10,-2],[15,0],[15,5],[20,5],[25,5],[30,10],[35,10],[37,10]],
-    [[70,30],[70,50],[68,60],[65,65],[60,60],[55,55],[50,55],[45,55],[40,45],[35,35],[30,35],[25,57],[20,57],[15,42],[10,42],[5,42],[10,42],[15,41],[20,37],[25,35],[30,32],[35,36],[40,36],[45,38],[50,40],[55,38],[60,40],[65,42],[70,50],[72,60],[70,65],[70,70],[68,70],[65,68],[60,70],[55,68],[50,68],[45,65],[40,55],[45,50],[50,50],[55,55],[60,60],[65,65],[70,70],[72,75],[70,80],[68,80],[65,82],[60,82],[55,75],[55,68],[50,68],[45,65],[40,55],[35,55],[30,55],[25,60],[20,72],[15,75],[10,77],[5,80],[0,80],[5,102],[10,104],[15,108],[20,110],[25,121],[30,122],[35,130],[38,128],[35,130],[30,122],[25,121],[20,110],[15,108],[10,104],[5,102],[0,104],[0,110],[5,115],[10,120],[15,108],[10,98],[5,98],[0,100],[-5,105],[-5,108],[-8,115],[-8,120],[-5,120],[-5,108],[-8,115],[0,105],[5,100],[10,98],[15,102],[20,100],[25,100],[30,95],[35,95],[40,75],[45,60],[50,55],[55,55],[60,55],[65,55],[70,50],[70,30]],
-    [[-15,130],[-15,136],[-17,140],[-20,148],[-25,152],[-30,153],[-35,150],[-38,146],[-38,140],[-35,136],[-32,132],[-30,115],[-22,113],[-18,122],[-15,130]],
-  ];
+  var posHN = toXYZ(14.2, -86.2, R + 0.05);
+  var markerMat = new THREE.MeshBasicMaterial({ color: 0x00ff44, transparent: true, blending: THREE.AdditiveBlending });
+  var marker = new THREE.Mesh(new THREE.SphereGeometry(0.08, 16, 16), markerMat);
+  marker.position.copy(posHN);
+  worldGroup.add(marker);
 
-  /* Sample points along polylines at ~1 deg spacing */
-  const landPts = [];
-  LAND.forEach(poly => {
-    for (let i = 0; i < poly.length - 1; i++) {
-      const [la1, lo1] = poly[i], [la2, lo2] = poly[i + 1];
-      const d = Math.sqrt((la2-la1)**2 + (lo2-lo1)**2);
-      const n = Math.max(1, Math.round(d / 0.9));
-      for (let j = 0; j < n; j++) {
-        const t = j / n;
-        landPts.push([la1 + (la2-la1)*t, lo1 + (lo2-lo1)*t]);
+  fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
+    .then(function(res) { return res.json(); })
+    .then(function(geoJson) {
+      var pts = [];
+      function addRing(coords) {
+        for (var i = 0; i < coords.length - 1; i++) {
+          var lon1 = coords[i][0], lat1 = coords[i][1];
+          var lon2 = coords[i+1][0], lat2 = coords[i+1][1];
+          var steps = Math.max(1, Math.floor(Math.hypot(lon2-lon1, lat2-lat1) * 2.5));
+          for (var j = 0; j < steps; j++) {
+            var t = j / steps;
+            pts.push(toXYZ(lat1+(lat2-lat1)*t, lon1+(lon2-lon1)*t, R + 0.02));
+          }
+        }
       }
-    }
+      geoJson.features.forEach(function(f) {
+        var g = f.geometry;
+        if (g.type === 'Polygon') addRing(g.coordinates[0]);
+        else if (g.type === 'MultiPolygon') g.coordinates.forEach(function(p) { addRing(p[0]); });
+      });
+      var bPos = new Float32Array(pts.length * 3);
+      pts.forEach(function(p, i) { bPos[i*3]=p.x; bPos[i*3+1]=p.y; bPos[i*3+2]=p.z; });
+      var bGeo = new THREE.BufferGeometry();
+      bGeo.setAttribute('position', new THREE.BufferAttribute(bPos, 3));
+      worldGroup.add(new THREE.Points(bGeo, new THREE.PointsMaterial({
+        color: 0xffffff, size: 0.045, sizeAttenuation: true,
+        transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending
+      })));
+    })
+    .catch(function() {});
+
+  /* (180-86.2)=93.8° centers Honduras; +2π adds the cinematic full spin */
+  var HOME_Y    = (180 - 86.2) * Math.PI / 180;
+  var HOME_X    = 14.2 * Math.PI / 180;
+  var INTRO_Y   = HOME_Y + Math.PI * 2;
+  var FINAL_Z   = 12;
+  var INTRO_SEC = 3.0;
+
+  /* Drag state */
+  var isDragging = false;
+  var isOver     = false;
+  var prevX = 0, prevY = 0;
+  var el = renderer.domElement;
+
+  el.addEventListener('pointerdown', function(e) {
+    if (!introDone) return;
+    isDragging = true;
+    isOver     = true;
+    prevX = e.clientX; prevY = e.clientY;
+    el.style.cursor = 'grabbing';
+    el.setPointerCapture(e.pointerId);
   });
+  el.addEventListener('pointermove', function(e) {
+    if (!isDragging) return;
+    var dx = e.clientX - prevX;
+    var dy = e.clientY - prevY;
+    worldGroup.rotation.y += dx * 0.006;
+    worldGroup.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2,
+      worldGroup.rotation.x + dy * 0.006));
+    prevX = e.clientX; prevY = e.clientY;
+  });
+  el.addEventListener('pointerup',    function() { isDragging = false; isOver = false; el.style.cursor = 'grab'; });
+  el.addEventListener('pointerleave', function(e) { if (!e.buttons) { isDragging = false; isOver = false; } });
+  el.addEventListener('pointerenter', function() { if (introDone) isOver = true; });
 
-  /* Graticule dots: every 20 deg lat, every 30 deg lon, sampled every 2 deg */
-  const gratPts = [];
-  for (let lat = -80; lat <= 80; lat += 20)
-    for (let lon = -180; lon <= 180; lon += 2.5) gratPts.push([lat, lon]);
-  for (let lon = -180; lon < 180; lon += 30)
-    for (let lat = -85; lat <= 85; lat += 2.5) gratPts.push([lat, lon]);
+  /* Shortest-arc lerp back to Honduras */
+  function shortArc(cur, tgt) {
+    var d = ((tgt - cur) % (Math.PI * 2) + Math.PI * 3) % (Math.PI * 2) - Math.PI;
+    return cur + d;
+  }
 
-  let rotY = 0, pinPulse = 0;
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  var clock      = new THREE.Clock();
+  var running    = false;
+  var introDone  = false;
 
   function draw() {
-    ctx.clearRect(0, 0, SIZE, SIZE);
+    if (!running) return;
+    requestAnimationFrame(draw);
+    var elapsed = clock.getElapsedTime();
 
-    /* Graticule particles */
-    gratPts.forEach(([lat, lon]) => {
-      const p = project(lat, lon, rotY);
-      if (p.z <= 0) return;
-      const depth = p.z / R;                    /* 0..1, 1 = front */
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 0.55, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(100,100,100,${0.08 + depth * 0.1})`;
-      ctx.fill();
-    });
-
-    /* Land particles */
-    landPts.forEach(([lat, lon]) => {
-      const p = project(lat, lon, rotY);
-      if (p.z <= 0) return;
-      const depth = p.z / R;
-      const alpha = 0.25 + depth * 0.6;
-      const r     = 0.8  + depth * 0.7;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(200,200,200,${alpha})`;
-      ctx.fill();
-    });
-
-    /* Honduras pin */
-    const hn = project(HN_LAT, HN_LON, rotY);
-    if (hn.z > 0) {
-      const pulse = (Math.sin(pinPulse) + 1) / 2;
-      ctx.beginPath();
-      ctx.arc(hn.x, hn.y, 5 + pulse * 9, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(248,113,113,${0.55 - pulse * 0.45})`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(hn.x, hn.y, 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = '#f87171';
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(hn.x, hn.y, 1.8, 0, Math.PI * 2);
-      ctx.fillStyle = '#fff';
-      ctx.fill();
+    if (!introDone) {
+      var prog  = Math.min(elapsed / INTRO_SEC, 1);
+      var eased = easeInOut(prog);
+      worldGroup.rotation.y = INTRO_Y * eased;
+      worldGroup.rotation.x = HOME_X  * eased;
+      camera.position.z     = 18 + (FINAL_Z - 18) * eased;
+      if (prog >= 1) introDone = true;
+    } else if (!isOver && !isDragging) {
+      /* Return to Honduras via shortest arc */
+      worldGroup.rotation.y += (shortArc(worldGroup.rotation.y, HOME_Y) - worldGroup.rotation.y) * 0.04;
+      worldGroup.rotation.x += (HOME_X - worldGroup.rotation.x) * 0.04;
     }
 
-    rotY      = (rotY + 0.18) % 360;
-    pinPulse += 0.045;
-    requestAnimationFrame(draw);
+    var pulse = 1 + Math.sin(elapsed * 7) * 0.4;
+    marker.scale.set(pulse, pulse, pulse);
+    markerMat.opacity = 0.55 + Math.sin(elapsed * 7) * 0.45;
+
+    renderer.render(scene, camera);
   }
 
-  const obs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) { draw(); obs.disconnect(); }
+  var obs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      running = true;
+      clock.start();
+      draw();
+      obs.disconnect();
+    }
   }, { threshold: 0.1 });
-  obs.observe(cvs);
+  obs.observe(container);
 })();
 </script>
 <div id="pn-overlay"></div>
