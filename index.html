@@ -795,7 +795,7 @@
       transition: min-height .7s cubic-bezier(.22,1,.36,1);
     }
     .proj-main-folder.pf-open {
-      min-height: 820px;
+      min-height: 640px;
     }
 
     /* small folder card (closed) */
@@ -4117,7 +4117,11 @@ initCardTilt();
   const accordion = document.getElementById('cert-accordion');
   const COLORS = ['#4285f4','#f25022','#1ba0d7','#c8c8c8'];
   const particles = [];
-  let W, H, frame = 0;
+  let W, H, frame = 0, certVis = false;
+
+  new IntersectionObserver(function(entries) {
+    certVis = entries[0].isIntersecting;
+  }, { threshold: 0 }).observe(canvas);
 
   function resize() {
     const r = canvas.parentElement.getBoundingClientRect();
@@ -4157,6 +4161,7 @@ initCardTilt();
 
   function draw() {
     requestAnimationFrame(draw);
+    if (!certVis || document.hidden) return;
     ctx.clearRect(0, 0, W, H);
 
     const ps = Array.from(accordion.querySelectorAll('.ca-panel'));
@@ -4494,8 +4499,8 @@ window.pageNav = function() {};
   var container = document.getElementById('globe-canvas');
   if (!container) return;
 
-  var SIZE = 480;
-  var DPR  = Math.min(window.devicePixelRatio || 1, 2);
+  var SIZE = 440;
+  var DPR  = Math.min(window.devicePixelRatio || 1, 1.5);
   var R    = 3.5;
 
   var scene  = new THREE.Scene();
@@ -4511,7 +4516,7 @@ window.pageNav = function() {};
   var worldGroup = new THREE.Group();
   scene.add(worldGroup);
 
-  var N = 35000;
+  var N = 18000;
   var basePos = new Float32Array(N * 3);
   for (var i = 0; i < N; i++) {
     var k     = i + 0.5;
@@ -4618,10 +4623,17 @@ window.pageNav = function() {};
   var clock      = new THREE.Clock();
   var running    = false;
   var introDone  = false;
+  var globeVis   = false;
+
+  /* Pause rendering when scrolled out of view */
+  new IntersectionObserver(function(entries) {
+    globeVis = entries[0].isIntersecting;
+  }, { threshold: 0 }).observe(container);
 
   function draw() {
     if (!running) return;
     requestAnimationFrame(draw);
+    if (!globeVis || document.hidden) return;
     var elapsed = clock.getElapsedTime();
 
     if (!introDone) {
